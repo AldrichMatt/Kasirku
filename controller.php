@@ -23,16 +23,26 @@ if(isset($_POST['menu'])){
 if(isset($_POST['edit'])){
     $item = mysqli_query($koneksi, 'SELECT * FROM `menu_table` WHERE `id` = '.$_REQUEST['item_id'].'')->fetch_assoc();
     $_SESSION['item'] = $item;
-    header("Location: edit-page.php");
-
-    
+    header("Location: edit-page.php"); 
 }
+
+if(isset($_POST['edit-order'])){
+    $order = mysqli_query($koneksi, 'SELECT * FROM `order_table` WHERE `order_id` = "'.$_REQUEST['order_id'].'"' )->fetch_assoc();
+    $_SESSION['order'] = $order;
+    header("Location: edit-order.php");
+}
+
+if(isset($_POST['close-order'])){
+    $order = mysqli_query($koneksi, 'UPDATE `order_table` SET `status`="1" WHERE `id` = "'.$_REQUEST['order_id'].'"');
+    header("Location: order.php");
+}
+
 if(isset($_POST['delete'])){
     mysqli_query($koneksi, 'DELETE FROM `menu_table` WHERE `id` = '.$_REQUEST['item_id'].'');
     header("Location: menu.php");
 }
 if(isset($_POST['detail'])){
-    $order_detail = mysqli_query($koneksi, 'SELECT * FROM `order_table` WHERE `id` = '.$_REQUEST['item_id'].'')->fetch_assoc();
+    $order_detail = mysqli_query($koneksi, 'SELECT * FROM `order_table` WHERE `id` = '.$_REQUEST['order_id'].'')->fetch_assoc();
     $_SESSION['order_detail'] = $order_detail;
     header("Location: order-detail.php");
 }

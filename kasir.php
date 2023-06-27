@@ -83,7 +83,7 @@
             return items
         }
 
-        function inputOrder(){
+        function inputOrder(str){
             date = new Date();
             year = date.getFullYear();
             month = parseInt(date.getMonth()) + 1;
@@ -95,7 +95,9 @@
             if(month < 10){
                 month = 0 + month.toString();
             }
-
+            if(day < 10){
+                day = 0 + day.toString();
+            }
             if(hour < 10){
                 hour = 0 + hour.toString();
             }
@@ -122,14 +124,29 @@
                     total = document.getElementById('total').innerHTML;
                     note = document.getElementById('note').value;
                     type = document.getElementById('type').value;
+                    method = document.getElementById('method').value;
                     
                     var request = new XMLHttpRequest();
                     request.open("POST", "add-order.php", true);
                     request.setRequestHeader("Content-Type", "application/json");
-                    var data = JSON.stringify({"order_id": order_id, "name": name, "date": date, "details": details, "total" : total, "note" : note, "type" : type, "detailsJSON" : detailsJSON});
+                    switch (str) {
+                        case 'open':
+                            
+                            var data = JSON.stringify({"order_id": order_id, "name": name, "date": date, "details": details, "total" : total, "note" : note, "type" : type, "detailsJSON" : detailsJSON, "status" : "0", "method" : method});
+                            var state = "Saved"
+                            break;
+                            case 'close':
+                                
+                                var data = JSON.stringify({"order_id": order_id, "name": name, "date": date, "details": details, "total" : total, "note" : note, "type" : type, "detailsJSON" : detailsJSON, "method" : method});
+                                var state = "Placed"
+                            break;
+                    
+                        default:
+                            break;
+                    }
                     request.send(data);
+                    alert("Order "+state+" Succesfully!");
 
-                    alert("Order Placed Succesfully!");
                     location.reload();
                 }
 
@@ -209,6 +226,13 @@
                     <option value="pick-up">Pick-Up</option>
                    </select>
                 </div>
+                <label for="">Method</label>
+                <div class="input-group my-3">
+                    <select class="form-select"name="method" id="method">
+                    <option value="transfer">Transfer</option>
+                    <option value="tunai">Cash</option>
+                   </select>
+                </div>
                 <label for="">Details</label>
                 <table class="table">
                     <thead>
@@ -232,7 +256,8 @@
                 </div>
                 <div class="jumbotron h5 mb-3">Sidenote</div>
                 <textarea name="note" id="note" cols="30" rows="4" class="form-control mb-3"></textarea>
-                <button class="btn btn-primary mb-3" onclick="inputOrder()" >Submit</button>
+                <button class="btn btn-primary mb-3" onclick="inputOrder('close')" >Submit</button>
+                <button class="btn btn-secondary mb-3" onclick="inputOrder('open')" >Save</button>
             </div>
             <div class="col-lg-6">
                 <div class="jumbotron h2">Menu</div>

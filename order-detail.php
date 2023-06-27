@@ -22,6 +22,7 @@ session_start();
                 <div class="jumbotron h4">Nama Customer : <?=$_SESSION['order_detail']['name']?></div>
                 <div class="jumbotron h4">Order date : <?=$_SESSION['order_detail']['date']?></div>
                 <div class="jumbotron h4">Type : <?=$_SESSION['order_detail']['type']?></div>
+                <div class="jumbotron h4">Method : <?=$_SESSION['order_detail']['method']?></div>
                 <div class="jumbotron h5">Note:</div>
                 <div class="card bg-warning bg-opacity-50 px-2 py-4"><?=$_SESSION['order_detail']['note']?></div>
                 <table class="table table-striped">
