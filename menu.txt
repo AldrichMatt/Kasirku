@@ -1,0 +1,26 @@
+<div class="col-lg-6">
+                <div class="jumbotron h2">Update Menu</div>
+                <form action="controller.php" method="post">
+                    <label for="">Nama Menu</label>
+                    <div class="input-group my-3">
+                        <input class="form-control" type="text" value="<?=$_SESSION['item']['name']?>" name="name" id="" required>
+                        <input class="form-control" type="hidden" value="<?=$_SESSION['item']['id']?>" name="id" id="" required>
+                        <input class="form-control" type="hidden" value="1" name="type" id="" required>
+                    </div>
+                    <label for="">Kategori</label>
+                    <div class="input-group my-3">
+                    <select class="form-select" name="category" id="" required>
+
+                        <option value="<?=$_SESSION['item']['category']?>"><?=$_SESSION['item']['category']?></option>
+                    <?php foreach ($category_data as $category) :?>
+                        <option value="<?=$category[1]?>"><?=$category[1]?></option>
+                    <?php endforeach;?>
+                    </select>
+                </div>
+                    <label for="">Harga</label>
+                    <div class="input-group my-3">
+                        <input class="form-control" type="number" value="<?=$_SESSION['item']['price']?>" name="price" id="" required>
+                        <input class="btn btn-primary" type="submit" name="menu"></button>
+                    </div>
+                </form>
+            </div>

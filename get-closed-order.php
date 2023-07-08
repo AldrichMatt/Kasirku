@@ -5,8 +5,14 @@ $date = $_REQUEST['date'];
 
 $order_data = mysqli_query($koneksi, "SELECT * FROM `order_table` WHERE order_id LIKE '".$date."%' AND `status` = '1'")->fetch_all();
 $total = mysqli_query($koneksi, "SELECT SUM(total) AS total FROM `order_table` WHERE order_id LIKE '".$date."%' AND `status` = '1'")->fetch_assoc();
+$left = mysqli_query($koneksi, "SELECT SUM(total) AS total FROM `order_table` WHERE `status` = '0'")->fetch_assoc();
+$transfer = mysqli_query($koneksi, "SELECT SUM(total) AS total FROM `order_table` WHERE order_id LIKE '".$date."%' AND `method` = 'transfer' AND `status` = '1'")->fetch_assoc();
+$tunai = mysqli_query($koneksi, "SELECT SUM(total) AS total FROM `order_table` WHERE order_id LIKE '".$date."%' AND `status` = '1' AND `method` = 'tunai'")->fetch_assoc();
 
 echo "<div class='jumbotron h2 pb-3'>Total : Rp" .number_format($total['total']) . "</div>";
+echo "<div class='jumbotron h5 pb-3'>Left : Rp" .number_format($left['total']) . "</div>";
+echo "<div class='jumbotron h5 pb-3'>Transfer : Rp" .number_format($transfer['total']) . "</div>";
+echo "<div class='jumbotron h5 pb-3'>Cash : Rp" .number_format($tunai['total']) . "</div>";
 echo "
 <table class='table table-dark table-striped'>
 <thead>

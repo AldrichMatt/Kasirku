@@ -59,7 +59,6 @@
                         document.getElementById("open-tab").setAttribute('class', 'nav-link')
                     break;
                     case "history":
-                        
                         document.getElementById("open").setAttribute('style', 'display:none')
                         document.getElementById("close").setAttribute('style', 'display:none')
                         document.getElementById("history").setAttribute('style', 'display:block')
@@ -122,19 +121,18 @@
     <?php include "navbar.php"?>
     <div class="container mx-5 mt-3">
         <a href="index.php" class="text-body"><- Back</a>
-
-        <ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active " aria-current="page" id="open-tab" onclick="menus('open')" href="#">Open Order</a>
-</li>
-<li class="nav-item">
-      <a class="nav-link" aria-current="page" id="close-tab" onclick="menus('close')" href="#">Today's Order</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" aria-current="page" id="history-tab" onclick="menus('history')" href="#">History</a>
-  </li>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active " aria-current="page" id="open-tab" onclick="menus('open')" href="#">Open Order</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" aria-current="page" id="close-tab" onclick="menus('close')" href="#">Today's Order</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" aria-current="page" id="history-tab" onclick="menus('history')" href="#">History</a>
+    </li>
 </ul>
-        <div id="close" class="my-3">
+    <div id="close" class="my-3">
             <div class="row">
                 <div class="col-lg">
                     <div class="jumbotron h2">Order</div>
@@ -149,7 +147,7 @@
         <div class="row">
             <div class="col-lg">
                 <div class="jumbotron h2">Open Order</div>
-                <div class="h5">Here are all the ongoing order</div>
+                <div class="h5">Here are all the ongoing/unpaid order</div>
                 <div id="open-order-place">
 
                 </div>

@@ -1,4 +1,9 @@
-<?php session_start(); ?>
+<?php
+    session_start();
+    include "koneksi.php";
+        $category_data = mysqli_query($koneksi, 'SELECT * FROM `category_table`')->fetch_all();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,22 +18,11 @@
 <body>
 <?php include "navbar.php"?>
     <div class="container mx-5 mt-3">
-            <div class="col-lg-6">
-                <div class="jumbotron h2">Update Menu</div>
-                <form action="controller.php" method="post">
-                    <label for="">Nama Menu</label>
-                    <div class="input-group my-3">
-                        <input class="form-control" type="text" value="<?=$_SESSION['item']['name']?>" name="name" id="" required>
-                        <input class="form-control" type="hidden" value="<?=$_SESSION['item']['id']?>" name="id" id="" required>
-                        <input class="form-control" type="hidden" value="1" name="type" id="" required>
-                    </div>
-                    <label for="">Harga</label>
-                    <div class="input-group my-3">
-                        <input class="form-control" type="number" value="<?=$_SESSION['item']['price']?>" name="price" id="" required>
-                        <input class="btn btn-primary" type="submit" name="menu"></button>
-                    </div>
-                </form>
-            </div>
+            <?php if($_SESSION['type'] == "menu"){
+                include "menu.txt";
+            }elseif($_SESSION['type'] == "category"){
+                include "category.txt";
+            }?>
 
 </body>
 </html>

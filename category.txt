@@ -1,0 +1,13 @@
+<div class="col-lg-6">
+                <div class="jumbotron h2">Update Menu</div>
+                <form action="controller.php" method="post">
+                    <label for="">Nama Kategori</label>
+                    <div class="input-group my-3">
+                        <input class="form-control" type="text" value="<?=$_SESSION['item']['category_name']?>" name="name" id="" required>
+                        <input class="form-control" type="hidden" value="<?=$_SESSION['item']['id']?>" name="id" id="" required>
+                        <input class="form-control" type="hidden" value="1" name="type" id="" required>
+                         <input class="btn btn-primary" type="submit" name="category"></button>
+                    </div>
+                    
+                </form>
+            </div>

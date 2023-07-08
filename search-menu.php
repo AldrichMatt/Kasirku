@@ -8,14 +8,18 @@ $res = mysqli_query($koneksi, "SELECT * FROM `menu_table` AS item WHERE `name` L
 
 foreach($res as $item):
     echo "<tr>";
-       echo "<td><button class='btn btn-primary rounded-circle' onclick='addMenu(".$item[0].",`".$item[1]."`, `".$item[2]."`, `amount".$item[0]."`, `".$item[3]."`)'>+</button></td>";
        echo "<td class='pe-5' id='food_id'>".$item[0]."</td>";
        echo "<td class='pe-5' id='food_name'>".$item[1]."</td>";
+       echo "<td class='pe-5' id='food_category'>".$item[3]."</td>";
        echo "<td class='pe-5' id='food_price'>Rp ".number_format($item[2])."</td>";
        echo "<td>";
-           echo "<div class='d-flex align-items-stretch'>";
-               echo "<button class='btn btn-warning' onclick='minusone(`amount".$item[0]."`)'>-</button><p id='amount".$item[0]."' class='my-auto px-3'>1</p><button class='btn btn-warning' onclick='addone(`amount".$item[0]."`)'>+</button>";
-           echo "</div>";
+           echo " <form action='controller.php' method='post'>
+           <input type='hidden' name='item_id' value='".$item[0]."'>
+           <button type='submit' name='edit' class='btn btn-warning m-2'> Edit </button>
+           
+           <!-- <button type='submit' name='edit' class='btn btn-warning'>Edit</button> -->
+           <button type='submit' name='delete' class='btn btn-danger m-2'>Delete</button>
+       </form>";
        echo "</td>";
    echo "</tr>";
 endforeach;  
