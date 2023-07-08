@@ -110,7 +110,7 @@
 
     <?php foreach($vendor_data as $v):?>
         <?php foreach($analytic_data as $a):?>
-            <?php $menu_analysis = mysqli_query($koneksi, "SELECT SUM(amount) as amount, menu_name FROM analytic_table WHERE vendor = '".$v[1]."' ")->fetch_assoc();
+            <?php $menu_analysis = mysqli_query($koneksi, "SELECT count(menu_name) as amount, menu_name FROM analytic_table WHERE order_id = ".$now." AND vendor = '".$v[1]."' ")->fetch_assoc();
             echo $v[1];
             echo($menu_analysis['amount'] ."pc(s) ". $menu_analysis['menu_name'] . "</br>" . "</br>");
             ?>
