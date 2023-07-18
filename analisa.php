@@ -22,7 +22,7 @@
     <script>
 
         window.onload = function(){
-            menus('menu');
+            menus('order');
         }
 
         function menus(str) {
@@ -45,13 +45,14 @@
         }
         function vendors(str){
             const page = document.getElementsByClassName('container foo');
-            const tab = document.getElementsByClassName('container foo');
+            const tab = document.getElementsByClassName('nav-link foo');
             
             for (let id = 0; id < page.length; id++) {
                 page[id].setAttribute('style', 'display:none');
+                tab[id].setAttribute('class', 'nav-link foo');
                 
             }
-            document.getElementById(str+"-tab").setAttribute('class', 'nav-link active');
+            document.getElementById(str+"-tab").setAttribute('class', 'nav-link foo active');
             document.getElementById(str).setAttribute('style', 'display:block');
             
             // const page = document.querySelectorAll('.container .foo:not([id^="'+str+'"])');
@@ -121,7 +122,7 @@
     <div class="jumbotron h2">Menu Analysis</div>
     <ul class="nav nav-tabs mb-3">
         <?php foreach($vendor_data as $v):
-            echo "<li class='nav-item'><a class='nav-link ' aria-current='page' id='".$v[1]."-tab' onclick='vendors(`".$v[1]."`)' href='#'>".$v[1]."</a></li>";
+            echo "<li class='nav-item'><a class='nav-link foo' aria-current='page' id='".$v[1]."-tab' onclick='vendors(`".$v[1]."`)' href='#'>".$v[1]."</a></li>";
         endforeach;?>
         <?php foreach($vendor_data as $v):
         $dataa = mysqli_query($koneksi, "SELECT *, COUNT(id) as count, vendor FROM `analytic_table` WHERE order_id LIKE '".$now."%' AND vendor = '".$v[1]."' ;")->fetch_assoc();
