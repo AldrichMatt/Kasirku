@@ -5,9 +5,9 @@
         $now = date('Ymd');
         $vendor_data = mysqli_query($koneksi, 'SELECT * FROM `category_table`')->fetch_all();
         $menu_data = mysqli_query($koneksi, 'SELECT * FROM `menu_table`')->fetch_all();
-        $analytic_data = mysqli_query($koneksi, 'SELECT * FROM `analytic_table`')->fetch_all();
-        $total = mysqli_query($koneksi, "SELECT SUM(total) AS total FROM `order_table` WHERE order_id LIKE '".$now."%' AND `status` = '1'")->fetch_assoc();
-        $total_yes = mysqli_query($koneksi, "SELECT SUM(total) AS total FROM `order_table` WHERE order_id LIKE '".($now-1)."%' AND `status` = '1'")->fetch_assoc();
+        $analytic_data = mysqli_query($koneksi, "SELECT * FROM `analytic_table` WHERE `order_id` LIKE '".$now."%'")->fetch_all();
+        $total = mysqli_query($koneksi, "SELECT SUM(total) AS total FROM `analytic_table` WHERE `order_id` LIKE '".$now."%' ")->fetch_assoc();
+        $total_yes = mysqli_query($koneksi, "SELECT SUM(total) AS total FROM `analytic_table` WHERE `order_id` LIKE '".($now-1)."%'")->fetch_assoc();
 
 ?>
 <!DOCTYPE html>
@@ -22,7 +22,7 @@
     <script>
 
         window.onload = function(){
-            menus('order');
+            menus('menu');
         }
 
         function menus(str) {
@@ -42,6 +42,21 @@
                     default:
                     break;
             }
+        }
+        function vendors(str){
+            const page = document.getElementsByClassName('container foo');
+            const tab = document.getElementsByClassName('container foo');
+            
+            for (let id = 0; id < page.length; id++) {
+                page[id].setAttribute('style', 'display:none');
+                
+            }
+            document.getElementById(str+"-tab").setAttribute('class', 'nav-link active');
+            document.getElementById(str).setAttribute('style', 'display:block');
+            
+            // const page = document.querySelectorAll('.container .foo:not([id^="'+str+'"])');
+            // const tab = document.querySelectorAll('.nav-item .foo:not([id^="'+str+'-tab"])');
+            // tab[0] = "nav-link";
         }
     </script>
 </head>
@@ -103,23 +118,36 @@
     
 <div id="menu">
    
-    
     <div class="jumbotron h2">Menu Analysis</div>
+    <ul class="nav nav-tabs mb-3">
+        <?php foreach($vendor_data as $v):
+            echo "<li class='nav-item'><a class='nav-link ' aria-current='page' id='".$v[1]."-tab' onclick='vendors(`".$v[1]."`)' href='#'>".$v[1]."</a></li>";
+        endforeach;?>
+        <?php foreach($vendor_data as $v):
+        $dataa = mysqli_query($koneksi, "SELECT *, COUNT(id) as count, vendor FROM `analytic_table` WHERE order_id LIKE '".$now."%' AND vendor = '".$v[1]."' ;")->fetch_assoc();
+        $count = $dataa['count'];
 
-    
+        echo "<div class='container foo' style='display:none;' id='".$v[1]."'>";
+        echo "<div class='jumbotron h3 mt-3'>".$v[1]."</div>";
+        echo "<hr>";
+        // for ($i=0; $i < $count; $i++) { 
+            $data_a = mysqli_query($koneksi, "SELECT amount, menu_name, order_id FROM `analytic_table` WHERE order_id LIKE '".$now."%' AND vendor = '".$v[1]."' ")->fetch_all();
+            // var_dump($data_a);
 
-    <?php foreach($vendor_data as $v):?>
-        <?php foreach($analytic_data as $a):?>
-            <?php $menu_analysis = mysqli_query($koneksi, "SELECT count(menu_name) as amount, menu_name FROM analytic_table WHERE order_id = ".$now." AND vendor = '".$v[1]."' ")->fetch_assoc();
-            echo $v[1];
-            echo($menu_analysis['amount'] ."pc(s) ". $menu_analysis['menu_name'] . "</br>" . "</br>");
-            ?>
-
-<?php endforeach;?>
-<?php endforeach;?>
+            // ec(array_unique($data_a));
+            foreach($data_a as $data){
+                echo "<div class='jumbotron h5 mt-3'># ".$data[2]."</div>";
+                echo "<div class='jumbotron h5 mt-3'>-- ".$data[0] . " " . $data[1] ."</div>" ;
+            }
+            
+            echo "</div>";
+            echo "</div>";
+ endforeach;?>
 </div>
 </div>
 
 
 </body>
+<script>
+    </script>
 </html>

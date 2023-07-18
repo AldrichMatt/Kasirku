@@ -5,6 +5,11 @@
             window.updateprice = [];
         };
         i = 1;
+
+        function check(order_id, menu_name){
+            
+        }
+
         function addMenu(str,food_name,food_price, amount, category){
 
             px = document.getElementById(amount).innerText;
@@ -167,7 +172,7 @@
                         case 'close':
                                 
                             var data = JSON.stringify({"order_id": order_id, "name": name, "date": date, "total" : total, "note" : note, "type" : type, "detailsJSON" : details, "status" : "1", "method" : method});
-                            var state = "Placed"
+                            var state = "Placed";
                             analysisneed(document.getElementById('id'), order_id);
                             break;
                         default:
